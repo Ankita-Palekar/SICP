@@ -9,12 +9,15 @@ process. In general, the technique of defining an invariant quantity that remain
 state is a powerful way to think about the design of iterative algorithms.)
 
 |#
+(define (fast-expt b n) 
+   (define (iter a b n) 
+     (cond ((= n 0) a) 
+           ((even? n) (iter a (square b) (/ n 2))) 
+           (else (iter (* a b) b (- n 1))))) 
+   (iter 1 b n)) 
+  
+(define (square x) (* x x)) 
 
+(define (even? n)
+	(= (remainder n 2) 0))
 
-(define (fast-expt b n)
-	(define (iter a b n))
-		(cond ((= n 0) a)
-			((even? n) (iter a (square b)(/ n 2))
-			(else ( iter (* a b) b (- n a)))
-			(iter 1 b n)
-			))
