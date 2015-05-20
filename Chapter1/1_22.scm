@@ -52,12 +52,13 @@
 
 
  
- (define (search-for-primes first last) 
-   (define (search-iter cur last) 
-     (if (<= cur last) (timed-prime-test cur)) 
-     (if (<= cur last) (search-iter (+ cur 2) last))) 
-   (search-iter (if (even? first) (+ first 1) first) 
-                (if (even? last) (- last 1) last))) 
+ (define (search-for-primes lower-limit upper-limit) 
+   (define (search-iter cur upper-limit) 
+     (if (<= cur upper-limit) (timed-prime-test cur)) 
+     (if (<= cur upper-limit) (search-iter (+ cur 2) upper-limit))
+   ) 
+   (search-iter (if (even? lower-limit) (+ lower-limit 1) lower-limit) 
+                (if (even? upper-limit) (- upper-limit 1) upper-limit))) 
   
 
 
