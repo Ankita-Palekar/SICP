@@ -6,6 +6,4 @@ compound expressions. Use this observation to describe the behavior of the follo
 
 |#
 
-
-If statement returns - or + . Then its used for evaluation of a + b or a - b
-
+If statement returns - or + . Then its used for evaluation of a + b 

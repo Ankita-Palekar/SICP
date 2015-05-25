@@ -13,7 +13,6 @@
 (define (start-prime-test n start-time)
 	(if (prime? n)
 		(report-prime (- (runtime) start-time))
-		 
 	)
 )
 
@@ -22,21 +21,7 @@
 	(display elapsed-time)
 )
 
-
-(define (search-for-primes  n)
-	(if (odd? n)
-		(
-			(start-prime-test n start-prime-test)
-			(search-for-primes  (- n 1))
-		)
-		(search-for-primes (- n 1))
-	) 
-)
-
-(define (odd? a)
-	(= (remainder a 2) 1)
-)
-
+ 
 
 (define (smallest-divisor n)
 	(find-divisor n 2))
@@ -50,15 +35,15 @@
 (define (prime? n)
 (= n (smallest-divisor n)))
 
-
- 
- (define (search-for-primes lower-limit upper-limit) 
-   (define (search-iter cur upper-limit) 
-     (if (<= cur upper-limit) (timed-prime-test cur)) 
-     (if (<= cur upper-limit) (search-iter (+ cur 2) upper-limit))
-   ) 
+ (define (search-for-primes lower-limit upper-limit ) 
+   (define (search-iter cur upper-limit ) 
+     (if (<= cur upper-limit) (timed-prime-test cur))  
+     (if (<= cur upper-limit) (search-iter (+ cur 2) upper-limit ))
+   )
    (search-iter (if (even? lower-limit) (+ lower-limit 1) lower-limit) 
-                (if (even? upper-limit) (- upper-limit 1) upper-limit))) 
+                (if (even? upper-limit) (- upper-limit 1) upper-limit)
+             )
+   ) 
   
 
 
