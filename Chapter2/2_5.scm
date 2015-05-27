@@ -1,0 +1,1 @@
+even 2^a  and odd 3^b

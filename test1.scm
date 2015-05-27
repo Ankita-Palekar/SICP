@@ -153,4 +153,139 @@
          ((= kinds-of-coins 5) 1)))) 
 
 
- 
+ ;procedure to add rational numbers try 
+
+
+(define (add-rat x y)
+	(make-rat 
+		(+ 
+			(* (numer x) (denom y)) (* (numer y) (denom x))) 
+			(* (denom y) (denom x))))
+
+
+(define (numer x) 
+	(car x))
+
+(define (denom x)
+	(cdr x))
+
+(define (make-rat x y)
+	(cons x y))
+
+(define (print-rat x)
+	(newline)
+	(display (numer x))
+	(display "/")
+	(display (denom x)))
+
+(define one-half  (make-rat 1 2))_
+
+(define one-third 
+	(make-rat 1 3))
+
+
+(print-rat (add-rat one-half one-third))
+
+(define two-third (make-rat 2 3))
+
+(define third-half (make-rat 3 2))
+
+(define minus-half (make-rat -1 2))
+
+(define plus-half (make-rat 1 2))
+
+
+
+(define minus-frac (make-rat -2 3))			
+
+(define plus-frac (make-rat 1 2))
+
+
+
+
+(define (gcd a b)
+	(if (= b 0)
+		a
+	(gcd b (remainder a b))))
+
+
+ (define (make-rat n d)
+		(let ((g (if (< d 0) - + )))
+			(cons (/ n g) (/ d g))))
+
+
+(print-rat (add-rat two-third third-half))
+
+; using constructor and selectors only without any data structure
+(define (cons x y)
+	(define (dispatch m)
+		(cond ((= m 0) x)
+			((= m 1) y)
+			(else (error "argument non zero " m)))) dispatch)
+(define (car z) (z 0))
+(define (cdr z) (z 1))
+
+
+
+
+(pair? (cons 1 2))
+
+
+;alysaa hackers interval problem
+
+(define (add-interval x y)
+	(make-interval (+ (lower-bound x) (lower-bound y))
+		(+ (upper-bound x) (upper-bound y))))
+
+(define (mul-interval x y)
+	(let ((p1 (* (lower-bound x) (lower-bound
+		(p2 (* (lower-bound x) (upper-bound
+		(p3 (* (upper-bound x) (lower-bound
+		(p4 (* (upper-bound x) (upper-bound
+		(make-interval (min p1 p2 p3 p4)
+		(max p1 p2 p3 p4))))
+
+(define (div-interval x y)
+	(mul-interval x
+	(make-interval (/ 1.0 (upper-bound y))
+	(/ 1.0 (lower-bound y)))))
+
+
+(define (make-interval a b) (cons a b))
+
+(define (sub-interval x y)
+	(make-interval (- (lower-bound x) (upper-bound y)) 
+									(- (upper-bound x) (lower-bound y))))
+
+
+
+;my favourite 
+;definning lists as the sequnce of data 
+
+;recursive method
+
+(define (list-ref items n)
+	( if(= n 0 )
+		(car items)
+		(list-ref (cdr items) (- n 1))))
+
+;to find the length of the item 
+
+
+(define (length items)
+	(if (null? items)
+		0
+		(+ 1 (length (cdr items)))))
+
+
+(define odd-list (list 1 3 5 7 9 11))
+
+(define square (list 1 4 9 16 25))
+
+;testing for the non arbitary number of argumenst
+
+(define (f x y . z)
+	(display z))
+
+(define (g . w)
+	(display w))
