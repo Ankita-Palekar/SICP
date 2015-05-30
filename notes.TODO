@@ -1,12 +1,27 @@
- ☐ 1.14 left t be solved 
- ☐ 1.39 check the output for tan
- ☐ 1.40 Check on the cubic function
- ☐ 2.3 abstraction barriers 
- ☐ 2.5 left to be solved
- ☐ 2.6 left to be solved 
- ☐ 2.13 for small percentages left to be evaluated 
- ☐ 2.15 left to be solved
- ☐ 2.16 left to be solved algebric expression 
- ☐ 2.19 lef to be solved 
- 
+ SICP solutions list :
+   ✔ 1.14 @left to be solved  @done (15-05-28 10:21)
+   ☐ 1.39 check the output for tan
+   ☐ 1.40 Check on the cubic function
+   ✔ 2.5 @left to be solved @done (15-05-28 11:15) @notSure 
+   ✔ 2.6 @left to be solved  @done (15-05-28 07:48)
+   ☐ 2.13 for small percentages left to be evaluated 
+   ☐ 2.15 @left 
+   ☐ 2.16 @left algebric expression 
+   ✔ 2.19 lef to be solved  @done (15-05-28 12:52)
+   ✔ 2.18 recursive procedure does not give output properly @check on the list which has cdr as empty because of which result is not proper @done (15-05-29 06:13)
+   
+   ☐ 2.27 proper deep reversing not done 
+   ☐ 2.29 @notSure  @critical
+   ☐ 2.32 @notSure
+   ☐ 2.36 @left
+        
 
+ Doubts :
+    ✔ 2.33 length @askRajdeep (if i can write external procedure as a operator ) @done (15-05-29 20:47)
+
+   
+
+to do list :
+   ☐ finish all remainning problems first 
+   ☐ check for all outputs which are remainning 
+   ☐ go through all the concepts again

@@ -87,6 +87,9 @@
 
 (get-length line-seg-a line-seg-b line-seg-c line-seg-d) 
 
+; using abstraction barrier 
+
+
 
 
 
