@@ -435,3 +435,235 @@
 							(map square 
 									(filter odd? sequence))))
 
+
+;Nested mapping 
+
+(define n 6)
+
+
+(accumulate append
+		nil
+			(map (lambda (i)
+					(map (lambda (j) (list i j))
+						(enumerate-interval 1 (- i 1))))
+							(enumerate-interval 1 n)))
+; using accumulate using the abstraction of the methods.
+
+(define (flatmap proc seq)
+	(accumulate append nil (map proc seq)))
+
+(define (prime-sum? pair)
+	(prime? (+ (car pair) (cadr pair))))
+
+(define (smallest-divisor n)
+	(find-divisor n 2))
+		(define (find-divisor n test-divisor)
+			(cond ((> (square test-divisor) n) n)
+				((divides? test-divisor n) test-divisor)
+				(else (find-divisor n (+ test-divisor 1)))))
+	
+	(define (divides? a b)
+			(= (remainder b a) 0))
+
+(define (prime? n)
+(= n (smallest-divisor n)))
+
+
+(define (make-pair-sum pair)
+	(list (car pair) (cadr pair) (+ (car pair) (cadr pair))))
+
+(define (prime-sum-pairs n)
+	(map make-pair-sum
+		(filter prime-sum?
+			(flatmap
+				(lambda (i)
+					(map (lambda (j) (list i j))
+						(enumerate-interval 1 (- i 1))))
+							(enumerate-interval 1 n)))))
+
+(define (permutations s)
+	(if (null? s)
+			(list nil)
+			(flatmap (lambda (x) (map (lambda (p) (cons x p))
+														(permutations (remove x s)))) s)))
+
+(define (filter predicate sequence)
+	(cond ((null? sequence) nil)
+				((predicate (car sequence)) (cons (car sequence) (filter predicate (cdr sequence))))
+				(else (filter predicate (cdr sequence)))
+		))
+
+(define (remove item sequence)
+	(filter (lambda(x) (not (= x item)))
+		sequence))
+
+
+;frame coordinates 
+
+
+(define (make-vect x y)
+		(cons x y))
+
+(define (xcor-vect z)
+	(car z))
+
+
+(define (ycor-vect z)
+	(cdr z))
+
+(define (frame-coord-map frame)
+	(lambda (x)
+		(add-vect (origin-frame frame))
+							(add-vect (scale-vect (xcor-vect v) 
+																		(edge1-frame frame))
+												(scale-vect (ycor-vect v)
+																		(edge2-frame frame)))))
+
+
+(define (memq item x)
+	(cond ((null? x) false)
+				((eq? item (car x)) x)
+				(else (memq item (cdr x)))
+				))
+
+;procedure to show symbolic differenciation 
+
+; a + b  ====> addend a === augend b
+; a*b   =====> multiplier a === multiplicand b
+
+
+(define (deriv exp var)
+	(cond ((number? exp) 0)
+				((variable? exp)
+					(if (same-variable? exp var) 1 0))
+				((sum? exp) (make-sum (deriv (addend exp) var)
+															(deriv (augend exp) var)))
+				((product? exp)
+					(make-sum (make-product (multiplier exp)
+										(deriv (multiplicand exp) var))
+										(make-product (deriv (multiplier exp) var)
+																	(multiplicand exp))))
+				(else (error "unknown expression type -- DERIV" exp))
+				))
+
+
+(define (variable? x)
+	(symbol? x))
+
+(define (same-variable? v1 v2)
+	(and (variable? v1) (variable? v2) (eq? v1 v2)))
+
+
+(define (make-sum a1 a2)
+	(list '+ a1 a2))
+
+(define (make-product a1 a2)
+	(list '* a1 a2))
+
+
+(define (sum? x)
+	(and (pair? x) (eq? '+ (car x))))
+
+(define (addend s)
+	(cadr s))
+
+
+(define (augend s)
+	(caddr s))
+
+(define (product? x)
+	(and (pair? x) (eq? (car x) '*)))
+
+
+(define (multiplier p)
+	(cadr p))
+
+(define (multiplicand p)
+	(caddr p))
+
+;modified make-sum for the purpose of simplifying the equation 
+
+
+(define (make-sum a1 a2)
+	(cond ((=number? a1 0) a2)
+		((=number? a2 0) a1)
+		((and (number? a1) (number? a2)) (+ a1 a2))
+		(else (list '+ a1 a2))
+		))
+
+
+(define (=number? exp num)
+	(and (number? exp) (= exp num)))
+
+;modiffued make-product for the purpose of simplification
+
+(define (make-product m1 m2)
+	(cond ((or (=number? m1 0) (=number? m2 0)) 0)
+				((=number? m1 1) m2)
+				((=number? m2 1) m1) 
+				((and (number? m1) (number? m2)) (* m1 m2))
+				(else (list '* m1 m2))))
+
+
+;trying segements and 
+
+
+(define (segments->painter segment-list)
+	(lambda(frame)
+		(for-each 
+			(lambda (segment)
+				(draw-line	((frame-coord-map frame) (start-segment segment))
+										((frame-coord-map frame) (end-segment segment))))
+			segment-list)))
+
+
+ (define (frame-coord-map frame)
+	(lambda (x)
+		(add-vect (origin-frame frame))
+							(add-vect (scale-vect (xcor-vect v) 
+																		(edge1-frame frame))
+												(scale-vect (ycor-vect v)
+																		(edge2-frame frame)))))
+
+ (define (make-vect x y)
+ 		(cons x y))
+
+ (define (xcor-vect z)
+ 	(car z))
+
+
+ (define (ycor-vect z)
+ 	(cdr z))
+
+
+ (define (add-vect vect1 vect2)
+ 	(let ((x1 (xcor-vect vect1))
+ 				(x2 (xcor-vect vect2))
+ 				(y1 (ycor-vect vect1))
+ 				(y2 (ycor-vect vect2)))
+ 			(cons (+ x1 x2) (+ y1 y2))
+ 	))
+
+ (define (reverse-vector vect)
+ 	( cons (- (xcor-vect vect)) (-  (ycor-vect vect))))
+
+
+ (define (sub-vect vect1 vect2)
+ 				(add-vect vect1 (reverse-vector vect2)))
+
+
+ (define (scale-vector vect factor)
+ 	(cons (* factor (xcor-vect vect)) (* factor (ycor-vect vect))))
+
+
+
+(define (transform-painter painter origin corner1 corner2)
+	(lambda(frame)
+		(let ((m (frame-coord-map frame)))
+			(let ((new-origin (m origin)))
+				(painter 
+				(make-frame new-origin (sub-vect (m corner1) new-origin))	(sub-vect (m corner2) new-origin))))))
+
+
+(define (flip-vertical painter)
+	(transform-painter painter (make-vect 0.0 1.0) (make-vect 1.0 1.0) (make-vect 0.0 0.0)))
