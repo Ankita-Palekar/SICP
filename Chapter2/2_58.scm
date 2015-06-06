@@ -93,6 +93,7 @@
 
 
 
+
 (define (base exp)
 	(cadr exp))
 
@@ -112,5 +113,20 @@ b==> using approach in the problem 2.57 we can solve the second part
 (define (addend s)
 	(car s))
 
+(define (sum? x)
+	(and (pair? x) (eq? '+ (cadr x))))
+
+(define (product? x)
+	(and (pair? x) (eq? (cadr x) '*)))
+
+(define (multiplier p)
+	(car p))
+ 
+(define (multiplicand s)
+	(cond ((and (pair? (cddr s)) (not (null? (cdddr s)))) (append (list '*) (cddr s)) )
+				(else (caddr s))))
+
 (define (augend s)
-	(caddr s))
+	(cond ((and (pair? (cddr s)) (not (null? (cdddr s)))) (append (list '+) (cddr s)) )
+				(else (caddr s))))
+ 

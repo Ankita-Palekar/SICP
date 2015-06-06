@@ -109,7 +109,7 @@
 	(< (abs (- neg-point pos-point)) 0.0001))
 
 (define (average neg-point pos-point)
-	(/ neg-point pos-point))
+	(/ neg-point pos-point)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           )
 
 
 ;testing fixed point algorithm 
@@ -667,3 +667,271 @@
 
 (define (flip-vertical painter)
 	(transform-painter painter (make-vect 0.0 1.0) (make-vect 1.0 1.0) (make-vect 0.0 0.0)))
+
+=====================================================================================================
+
+representing set in the form of tree and further in the form of list that is the abstraction of the data abstraction
+since we are using the tree structure number of steps are broken to (log n)
+
+
+
+(define (entry tree)
+	(car tree))
+
+(define (left-branch tree)
+	(cadr tree))
+
+(define (right-branch tree)
+	(caddr tree))
+
+(define (make-tree entry left right)
+	(list entry left right))
+
+
+(define (element-of-set? x set)
+	(cond ((null? set) false)
+				((= x (entry set)) true)
+				((< x (entry set)) (element-of-set? x (left-branch set)))
+				((> x (entry set)) (element-of-set? x (right-branch set))) ))
+
+(define nil '())
+(define tree (list 6 (list 5 (list 2 nil nil) (list 6 nil nil)) (list 9 nil nil)))
+
+(define (adjoin-set x set)
+	(cond ((null? set) (make-tree x nil nil))
+				((= x (entry set)) set)
+				((< x (entry set)) (make-tree (entry set) (adjoin-set x (left-branch set)) (right-branch set)))
+				((> x (entry set)) (make-tree (entry set) (left-branch set) (adjoin-set x (right-branch set))))))
+
+procedure converting the tree (formed by above procedure to the list) 
+
+(define (tree->list-1 tree)
+	(if(null? tree)
+		nil
+		(append (tree->list-1 (left-branch tree)) (cons (entry tree) (tree->list-1 (right-branch tree))))))
+
+(define (tree->list-2 tree)
+	(define (copy-to-list tree result-list)
+	(if (null? tree)
+		result-list
+		(copy-to-list (left-branch tree) 
+			(cons (entry tree) (copy-to-list (right-branch tree) result-list)))))
+		(copy-to-list tree nil))
+
+
+
+====================================================================================================
+
+Huffman Encoding 
+
+(define (make-leaf symbol weight)
+	(list 'leaf symbol weight))
+
+(define (leaf? object)
+	(eq? (car object) 'leaf))
+
+(define (symbol-leaf x)
+	(cadr x))
+
+(define (weight-leaf x)
+	(caddr x))
+
+
+To make a tree 
+
+(define (make-code-tree left right)
+	(list left right (append (symbols left)(symbols right)) (+ (weight left) (weight right))))
+
+; Selectors for the tree coded above 
+
+(define (left-branch tree)
+	(car tree))
+
+(define (right-branch tree)
+	(cadr tree))
+
+(define (symbols tree)
+	(if (leaf? tree) 
+		(list (symbol-leaf tree))
+		(caddr tree)))
+
+(define (weight tree)
+	(if (leaf? tree)
+		(weight-leaf tree)
+		(cadddr tree)))
+
+
+; (define (+ left right)
+; 	(if (and (pair? left) (pair? right))
+; 			(+ (car left) (car right))
+; 			(+ left right)
+; 			))
+
+(define nil '())
+
+(define (decode bits tree)
+	(define (decode-1 bits current-branch)
+		(if (null? bits)
+			nil
+			(let ((next-branch (choose-branch (car bits) current-branch)))
+				(if (leaf? next-branch)
+					(cons (symbol-leaf next-branch)
+							(decode-1 (cdr bits) tree))	
+						(decode-1 (cdr bits) next-branch)))))
+						(decode-1 bits tree))
+
+
+(define (choose-branch bit branch)
+	(cond ((= bit 0)	(left-branch branch))
+				((= bit 1)	(right-branch branch))
+				(else (error "bad bit--- CHOOSE-BRANCH" bit))))
+
+(define leaf-a (make-leaf 'A 8))
+(define leaf-b (make-leaf 'B 3))
+(define leaf-c (make-leaf 'C 1))
+(define leaf-d (make-leaf 'D 1))
+(define leaf-e (make-leaf 'E 1))
+(define leaf-f (make-leaf 'F 1))
+(define leaf-g (make-leaf 'G 1))
+(define leaf-h (make-leaf 'H 1))
+
+
+(define tree-1 (make-code-tree leaf-g leaf-h))
+; adojoin of set for the repeated set
+
+(define (adjoin-set x set)
+	(cond ((null? set) (list x))
+				((< (weight x) (weight (car set))) (cons x set))
+				(else (cons (car set) (adjoin-set x (cdr set))))))
+
+
+(define (make-leaf-set pairs)
+	(if (null? pairs)
+			nil
+			(let ((pair (car pairs)))
+				(adjoin-set (make-leaf (car pair) (cadr pair))
+					(make-leaf-set (cdr pairs))))))
+
+
+(define sample-tree 
+	(make-code-tree (make-leaf 'A 4)
+		(make-code-tree (make-leaf 'B 2)
+										(make-code-tree (make-leaf 'D 1)
+																		(make-leaf 'C 1)))))
+
+
+(define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
+
+
+
+========================================================================================================
+															Multiple Representation of Abstract data
+========================================================================================================
+Z = x + iy => In the form of imaginary and real real-part
+
+Z = r(cos(theta) + sin(theta))
+
+mag = |Z| = root(x*x + y*y)
+ang = tan(theta) = arctan(y x)
+a = r * cos (theta)
+b = r * sin (theta)
+
+
+
+
+note :atan returns the result of tan (y/x) sign of the argumenst determine the quodrant
+
+
+(define (make-from-real-img z1 z2)
+	(cons z1 z2))
+
+(define (make-from-mag-ang z1 z2)
+	(cons z1 z2))
+
+(make-from-real-img (real-part z) (imag-part z))
+
+(make-from-mag-ang (magnitude z) (angle z))																
+
+(define (add-complex z1 z2)
+	(make-from-real-img (+ (real-part z1) (real-part z2))
+											(+ (imag-part z1) (imag-part z2))))
+
+(define (sub-complex z1 z2)
+	(make-from-real-img (- (real-part z1) (real-part z2))
+											(- (imag-part z1) (imag-part z2))))
+
+(define (mul-complex z1 z2)
+	(make-from-mag-ang (* (magnitude z1) (magnitude z2))
+										 (+ (angle z1) (angle z2))))
+
+(define (div-complex z1 z2)
+	(make-from-mag-ang (/ (magnitude z1) (magnitude z2)) 
+											(- (angle z1) (angle z2))))
+
+(define (real-part z)
+	(car z))
+
+(define (imag-part z)
+	(cdr z))
+
+(define (magnitude z)
+	(sqrt (+ (square (real-part z)) (square (imag-part z)))))
+
+(define (angle z)
+	(atan (real-part z) (imag-part z)))
+
+(define (make-from-mag-ang r a)
+	(cons (* r (cos a)) (* r (sin a))))
+
+; Selectors for the problem implementes in the form of magnitude and radius
+
+(define (real-part z)
+	(* (magnitude z) (cos (angle z))))
+
+(define (imag-part z)
+	(* (magnitude z) (sin (angle z))))
+
+(define (magnitude z)
+	(car z))
+
+(define (angle z)
+	(cdr z))
+
+(define (make-from-real-img x y)
+	(cons (sqrt (+ (square x) (square y))) (atan y x)))
+
+(define (make-from-mag-ang r a)
+	(cons r a))
+
+
+==================================================================================
+
+
+Trying out additivity and the data-directed programming using the generic procedures
+
+Fora rectangular packages
+
+(define (install-rectangular-package)
+	;; internal procedures
+	(define (real-part z) (car z))
+	(define (imag-part z) (cdr z))
+	(define (make-from-real-img x y) (cons x y))
+	(define (magnitude z) 
+						(sqrt (+ (square (real-part z))
+										 (square (imag-part z)))))
+	(define (angle z)
+		(atan (imag-part z) (real-part z)))
+	(define (make-from-mag-ang r a)
+		(cons (* r (cos a)) (* r (sin a))))
+
+	;; interfaces to the rest of the system 
+	(define (tag x) (attach-tag 'rectangular x))
+	(put 'real-part '(rectangular) real-part)
+	(put 'imag-part '(rectangular) imag-part)
+	(put 'magnitude '(rectangular) magnitude)
+	(put 'angle 		'rectangular angle)
+	(put 'make-from-real-img  'rectangular (lambda (x y) (tag (make-from-real-img x y))))
+	(put 'make-from-mag-ang 'rectangular (lambda (x y) (tag (make-from-mag-ang r a))))
+	'done
+	)
+

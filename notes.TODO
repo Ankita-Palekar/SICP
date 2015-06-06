@@ -19,7 +19,14 @@
    ☐ 2.42 @left 
    ☐ 2.43 @left 
    ☐ 2.52 @left
-   ☐ 2.57 @left (can be solved solve in some different manner)
+   ✔ 2.57 @left (can be solved solve in some different manner) @done (15-06-03 14:50)
+ ☐ 2.61 @check (for the answers)
+ ☐ 2.62 @check (for the answers)
+ ☐ 2.64 a @check (for explainations)
+ ☐ 2.65 intersection of the 2 sets left 
+ ☐ 2.68 - 2.72 @left
+
+  
 
 
    
@@ -27,10 +34,12 @@
 
  Doubts :
     ✔ 2.33 length @askRajdeep (if i can write external procedure as a operator ) @done (15-05-29 20:47)
+    ☐ @askRajdeep about the concept of data dispatching data-tagging and multiple representation of abstract data in the product. 
+    
 
    
 
 to do list :
-   ☐ finish all remainning problems first 
+   ✔ finish all remainning problems first  @done (15-06-05 19:52)
    ☐ check for all outputs which are remainning 
    ☐ go through all the concepts again
