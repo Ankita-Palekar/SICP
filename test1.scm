@@ -935,3 +935,37 @@ Fora rectangular packages
 	'done
 	)
 
+================================================================================================
+
+; test rajdeep sum
+
+add(a)(b) should return the value a + b
+ 
+
+(define (add a b)
+	(define (dispatch x y)
+		(+ x y))
+	dispatch
+	)
+
+(define (add-two x y)((add x y) x y))
+ 
+
+(define (add-two x)
+	(define (dispatch y)
+		(+ x y))
+	dispatch
+	)
+
+ (define (add x) (add-two x))
+================================================================================================ 
+						using the poly method discussed
+================================================================================================
+
+(define (same-variable? v1 v21) 
+	(and (variable? v1) (variable? v2) (eq? v1 v2)))
+
+
+
+
+
