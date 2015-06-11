@@ -27,15 +27,27 @@
                   (enumerate-interval 2 (- i 1))))
            (enumerate-interval 1 n)))
 
-(define (check-sum-equal? s)
-  (lambda (tripple) 
-    (= s (+ (car tripple) (cadr tripple) (caddr tripple)))))
+ 
+ (define (filter predicate sequence)
+  (cond ((null? sequence) nil)
+        ((predicate (car sequence)) (cons (car sequence) (filter predicate (cdr sequence))))
+        (else (filter predicate (cdr sequence)))))
 
-(define (make-tripple-sum tripple)
-  (list (car tripple) (cadr tripple) (caddr tripple)
-        (+ (car tripple) (cadr tripple) (caddr tripple))))
+ 
+(define (unique-tripples-sum n s)
+    (define (get-tripple-sum s tripple)
+      (if(null? tripple)
+          nil
+        (
+        let ((term (car tripple)))
+        (cond ((= s (+ (car term) (cadr term) (caddr term))) (append (list term) (list s)))
+              (else (get-tripple-sum s (cdr tripple)))) )))
+    (get-tripple-sum s (unique-tripples n)))
 
-(define (equal-sum-tripples n s)
-  (map make-tripple-sum
-       (filter (check-sum-equal? s)
-               (unique-tripples n))))
+
+
+(unique-tripples-sum  5 12)
+;Value 87: ((5 4 3) 12)
+
+(unique-tripples  5 )
+;Value 88: ((3 2 1) (4 2 1) (4 3 1) (4 3 2) (5 2 1) (5 3 1) (5 3 2) (5 4 1) (5 4 2) (5 4 3))

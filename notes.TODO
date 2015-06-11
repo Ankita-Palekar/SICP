@@ -5,26 +5,27 @@
    ✔ 2.5 @left to be solved @done (15-05-28 11:15) @notSure 
    ✔ 2.6 @left to be solved  @done (15-05-28 07:48)
    ☐ 2.13 for small percentages left to be evaluated 
-   ☐ 2.15 @left 
+   ☐ 2.15 @left  state the second point 
    ☐ 2.16 @left algebric expression 
    ✔ 2.19 lef to be solved  @done (15-05-28 12:52)
    ✔ 2.18 recursive procedure does not give output properly @check on the list which has cdr as empty because of which result is not proper @done (15-05-29 06:13)
    
-   ☐ 2.27 proper deep reversing not done 
+   ✔ 2.27 proper deep reversing not done  @done (15-06-10 18:28)
    ✔ 2.29 @notSure  @critical @done (15-06-01 01:31)
    ✔ 2.32 @notSure @done (15-06-01 01:35)
    ✔ 2.36 @left @done (15-06-01 01:35)
-   ☐ 2.39 @notSure for fold left not working 
-   ☐ 2.41 @left 
-   ☐ 2.42 @left 
-   ☐ 2.43 @left 
+   ✔ 2.39 @notSure for fold right not working  @done (15-06-10 12:02)
+   ✔ 2.41 @left  @done (15-06-10 13:44)
+   ☐ 2.42 @left 8 queens 
+   ☐ 2.43 @left  8 queens extended
    ☐ 2.52 @left
    ✔ 2.57 @left (can be solved solve in some different manner) @done (15-06-03 14:50)
  ☐ 2.61 @check (for the answers)
  ☐ 2.62 @check (for the answers)
  ☐ 2.64 a @check (for explainations)
- ☐ 2.65 intersection of the 2 sets left 
+ ✔ 2.65 intersection of the 2 sets left  @done (15-06-10 17:47) (done with element-of-set? method) (and also with tree traversal)
  ☐ 2.68 - 2.72 @left
+ ✔ 2.68 @done (15-06-11 06:03)
  ☐ 2.76 @left
  ☐ 2.86 @left
  ☐ 2.91 @notSure

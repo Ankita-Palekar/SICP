@@ -79,41 +79,36 @@
 (define nil '())
 
  
-
-
-
-
+================================================================================================ 
+; using method of tree traversal
 (define (intersection-set set1 set2)
 	( if(or (null? set1) (null? set2))
 			nil
 		(let ((X1 (entry set1))
 					(x2 (entry set2)))
 			(cond ((= x1 x2) (make-tree x1 (intersection-set (left-branch set1) (left-branch set2)) (intersection-set (right-branch set1) (right-branch set2))))
+						((< x1 x2) (make-tree (intersection-set (right-branch set1) set2) 
+																	(intersection-set (left-branch set1) (left-branch set2)) 
+																	(intersection-set (right-branch set1) (right-branch set2))))
+						((> x1 x2)(make-tree 	(intersection-set (left-branch set1) set2) 
+																	(intersection-set (left-branch set1) (left-branch set2))
+																	(intersection-set (right-branch set1) (right-branch set2))))))))
 
-						((< x1 x2) 	(intersection-set (right-branch set1) set2) 
-												(newline)
-												(display "======= set 1========")
-												(newline)
-												(display set1)
-												(newline)
-												(display "======== set2 ======")
-												(newline)
-												(intersection-set set1 (left-branch set2)) 
-												(display set2)
-												(intersection-set set1 (right-branch set2)))
-						((> x1 x2) 	(intersection-set (left-branch set1) set2)
-												(newline)
-												(display "======== set 1 ======")
-												(newline)
-												(display set1)
-												(newline)
-												(display "======== left set2 ======")
-												(newline)
-												(display set2)
-												(intersection-set set1 (left-branch set2)) 
-												(intersection-set set1 (right-branch set2)))))))
+================================================================================================
+;intersection using element of x? procedure
+(define (intersection-set set1 set2)
+	(if(or (null? set1) (null? set2))
+		nil
+		(let ((x1 (car set1)))
+			(cond ((element-of-set? x1 set2)
+									(make-tree x1 (intersection-set (left-branch set1) set2) 
+																(intersection-set (right-branch set1) set2))) 
+						(else (make-tree nil 	(intersection-set (left-branch set1) set2) 
+																	(intersection-set (right-branch set1) set2)))))))	
 
 ;=======================================================================================================
+
+
 
 (define (union-set tree1 tree2)
 	(cond ((and (null? tree1) (null? tree2)) nil)
