@@ -7,3 +7,4 @@
 				(else (error "Unknown op -- MAKE FROM mag ang--" op))))
 	dispatch)
  
+ (define (appy-generic op args) (arg op))

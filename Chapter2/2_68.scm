@@ -3,7 +3,7 @@
 (define (encode message tree)
 	(if (null? message)
 		nil
-		(append (encode-symbol (car messgae) tree) (encode (cdr message) tree))))
+		(append (encode-symbol (car message) tree) (encode (cdr message) tree))))
 
 	 
 
