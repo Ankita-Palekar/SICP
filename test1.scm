@@ -965,7 +965,110 @@ add(a)(b) should return the value a + b
 (define (same-variable? v1 v21) 
 	(and (variable? v1) (variable? v2) (eq? v1 v2)))
 
+===================================== chapter 3===========================================================
+
+
+(define balance 100)
+
+(define (withdraw amount)
+	(if (>= balance amount)
+		(begin (set! balance (- balance amount)) balance)
+			"insufficient funds"))
+
+(define new-withdraw
+	(let ((balance 100))
+		(lambda(amount)
+			(if (>= balance amount)
+					(begin (set! balance (- balance amount)) balance) "In sufficient funds"))))
+
+
+(define (make-withdraw balance)
+	(lambda (amount) (
+		if(>= balance amount)
+		(begin (set! balance (- balance amount)) balance)
+		"Insufficien amount")))
 
 
 
+procdeure to make an bank account
 
+(define (make-account balance)
+	(define (withdraw amount)
+		(if (>= balance amount)
+			(begin (set! balance (- balance amount)))
+
+			"insufficient funds"))
+	(define (deposit amount)
+	(set! balance (+ balance amount))
+	balance)
+	(define (dispatch m)
+		(cond ((eq? m 'withdraw) withdraw)
+					((eq? m 'deposit) deposit)
+					(else (error "unknown request -- MAKE - ACCOUNT" m))
+		))
+	dispatch
+	)
+
+
+Monte carlo methdo
+
+(define (monte-carlo trials experiment)
+	(define (iter trials-remainning trials-passed)
+		(cond ((= trials-remainning 0)(/ trials-passed trials))
+					((experiment) (iter ( trials-remainning 1) (+ trials-passed 1)))
+					(else (iter (- trials-remainning 1) trials-passed))
+			)
+		(iter trials 0)))
+
+(define (estimate-pi trials)
+	(sqrt (/ 6 (monte-carlo trials cesaro-test))))
+
+	(define (cesaro-test)
+		(= (gcd (random 10) (random 100))))
+
+
+(define (estimate-pi trials)
+	(sqrt (/ 6 (random-gcd-test trials random-init))))
+
+(define (random-gcd-test trials initial-x)
+	(define (iter trials-remainning trials-passed x)
+		(let ((x1 (rand-update x)))
+			(let ((x2 (rand-update x1)))
+				(cond ((= trials-remainning 0)
+								(/ trials-passed trials))
+				((= (gcd x1 x2) 1)
+					(iter (- trials-remainning 1)
+						(+ trials-passed 1)
+						x2))
+				(else (iter (- trials-remainning 1) trials-passed x2))))))
+	(iter trials 0 initial-x))
+
+
+(define (make-simplified-withdrawal balance)
+	(lambda (amount)
+		(set! balance (- balance amount))
+
+		balance))
+
+(define (make-increment balance)
+	(lambda (amount)
+		(- balance amount)))
+
+
+
+; factorial computatoin using the assignement operator 
+
+(define (factorial n)
+	(let ((product 1)
+				(counter 1)) 
+		(define (iter)
+			(if (> counter n)
+			product 
+			(begin 	(set! product (* counter product))
+							(set! counter (+ counter 1)) (iter))))
+
+		(iter)
+		))
+
+
+; changing the order of the set variable chnages the way result will be calculated

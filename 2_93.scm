@@ -94,6 +94,6 @@
 
 
 1 ]=> (define p2 (make-polynomial 'x '((3 1) (0 1))))
-;Value: p2
+;Value: p2p
 1 ]=> p2
 ;Value 13: (x (3 1) (0 1))

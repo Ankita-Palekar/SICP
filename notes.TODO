@@ -35,25 +35,27 @@
  ☐ 2.96  @left
  ☐ 2.97 @left
 
+ ☐ not understood monte carlo properly 
 
 
+
+
+Chapter3
+ ☐ 3.4 call copse not getting called even after incrementing the wrong password counter 
+ 
   
 Refer:
    overapi.com
-   
-
-   
-        
-
+ 
  Doubts :
     ✔ 2.33 length @askRajdeep (if i can write external procedure as a operator ) @done (15-05-29 20:47)
     ☐ @askRajdeep about the concept of data dispatching data-tagging and multiple representation of abstract data in the product. 
 
     building term list whether from the existing one or the new one and if new one what is the input we are giving it 
-    
-    
+   chapter3 doubts:
+     In exercise 3_2 is it feasible to use (define call-count 0) inside the procedure make-monitored , because earlier they have explained  its not good to use 
 
-   
+
 
 to do list :
    ✔ finish all remainning problems first  @done (15-06-05 19:52)
