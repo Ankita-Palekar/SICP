@@ -1011,21 +1011,38 @@ procdeure to make an bank account
 
 
 Monte carlo methdo
+; definning the random update function 
+ note: random update for x (ax + b) mod m where a b mare the chosen integers 
+
+;(define (rand-update x)
+;	(remainder (+ (* (random 10) x) (random 10)) (random 10)))
+
+(define (rand-update x)
+	(let ((a 900)
+				(b 555)
+				(m 47))
+		(remainder (+ (* a x) b) m)))
 
 (define (monte-carlo trials experiment)
 	(define (iter trials-remainning trials-passed)
 		(cond ((= trials-remainning 0)(/ trials-passed trials))
-					((experiment) (iter ( trials-remainning 1) (+ trials-passed 1)))
-					(else (iter (- trials-remainning 1) trials-passed))
-			)
-		(iter trials 0)))
+					((experiment) (iter (- trials-remainning 1) (+ trials-passed 1)))
+					(else (iter (- trials-remainning 1) trials-passed))))
+	(iter trials 0))
 
 (define (estimate-pi trials)
 	(sqrt (/ 6 (monte-carlo trials cesaro-test))))
 
-	(define (cesaro-test)
-		(= (gcd (random 10) (random 100))))
+(define (cesaro-test)
+	(= (gcd (r) (r))))
+	
+(define random-init 47)
 
+(define (rand random-init)
+	(let ((x random-init))
+		(lambda ()
+			(set! x (rand-update x))
+			x)))
 
 (define (estimate-pi trials)
 	(sqrt (/ 6 (random-gcd-test trials random-init))))
@@ -1047,7 +1064,6 @@ Monte carlo methdo
 (define (make-simplified-withdrawal balance)
 	(lambda (amount)
 		(set! balance (- balance amount))
-
 		balance))
 
 (define (make-increment balance)
@@ -1072,3 +1088,18 @@ Monte carlo methdo
 
 
 ; changing the order of the set variable chnages the way result will be calculated
+
+
+(define (cons x y)
+	(lambda(m) (m x y)))
+
+(define (car z)
+	( z (lambda (p q) p)))
+
+(define (append! x y)
+	(set-cdr! (last-pair x) y))
+
+(define (last-pair x) 
+	(if(null? (cdr x))
+		x(last-pair (cdr x))))
+

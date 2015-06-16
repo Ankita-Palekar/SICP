@@ -22,7 +22,7 @@
 (define b two)
 
 ;numeral application 
-((a f) x)  ;function should be executed this wa 
+((a f) x)  ;function should be executed this way
 
 
 ((b (lambda (x)
