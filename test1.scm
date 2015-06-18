@@ -1103,3 +1103,49 @@ Monte carlo methdo
 	(if(null? (cdr x))
 		x(last-pair (cdr x))))
 
+
+
+
+;;infinite streams 
+
+
+
+(define (intergers-starting-from n)
+	(cons-stream  n (intergers-starting-from (+ n 1))))
+
+	(define integers (intergers-starting-from 1))
+
+
+	(define (divisible? x y)
+		(= (remainder x y) 0))
+
+	(define no-sevens (stream-filter (lambda(x) (not (divisible? x 7)))
+		integers))
+
+	(stream-ref no-sevens 100)
+	117
+
+	(define (fibgen a b)
+		(cons-stream a (fibgen b (+ a b))))
+
+	(define fibs (fibgen 0 1))
+
+	(define (sieve stream)
+		(cons-stream (stream-car stream) 
+								 (sieve (stream-filter (lambda(x) (not (divisible? x (stream-car stream))))
+								 	(stream-cdr stream)))))
+	(define primes (sieve (intergers-starting-from 2)))
+
+(define (scale-stream stream factor)
+	(stream-map (lambda(x) (* x factor)) stream))
+
+
+(define primes (cons-stream 2 (stream-filter prime? (intergers-starting-from 3))))
+
+
+(define (prime? n)
+	(define (iter ps)
+		(cond ((> (square (stream-car ps)) n) true)
+					((divisible? n (stream-car ps)) false)
+					(else (iter (stream-cdr ps)))))
+	(iter primes))

@@ -1,4 +1,4 @@
-(define (square-tree tree) (tree-map cube tree))
+\(define (square-tree tree) (tree-map cube tree))
 
 
 (define (tree-map proc tree)
