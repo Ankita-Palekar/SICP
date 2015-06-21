@@ -15,9 +15,4 @@ It prducesthe given below series if the promise has been run
 	(stream-map (lambda(x) (* x factor)) stream))
 
 
-
-	(define (stream-map proc . argstreams)
-		(if (stream-null? (car argstreams))
-			the-empty-stream
-			(cons-stream (apply proc (map stream-car argstreams))
-				(apply stream-map (cons proc (map stream-cdr argstreams))))))
+ 
