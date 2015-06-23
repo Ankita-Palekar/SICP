@@ -11,6 +11,16 @@
 		s2
 		(cons-stream (stream-car s1) (stream-append (stream-cdr s1) s2))))
 
+ 
+
+(define (interleave s1 s2)
+	(cond ((stream-null? s1) s2)
+				(else (display (stream-car s1)) (cons-stream (stream-car s1) (interleave s2 (stream-cdr s1))))))
+
+
+
+
+ 
 
 (define (interleave s1 s2)
 	(if (stream-null? s1)

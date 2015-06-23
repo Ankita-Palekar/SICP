@@ -15,7 +15,7 @@
 (define s (cons-stream 1 (merge (merge (scale-stream s 2) (scale-stream s 3)) (scale-stream s 5))))
 
 3 error> (stream-ref s 1)
-;Value: 2
+;Value: 2	
 3 error> (stream-ref s 2)
 ;Value: 3
 3 error> (stream-ref s 3)
