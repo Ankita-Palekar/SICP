@@ -36,6 +36,8 @@
 
 
 
+
+
 (define cube-pair (weighted-pairs integers integers cube-weight))
 
  1 ]=> (define r-no (ramanujan-no cube-pair))

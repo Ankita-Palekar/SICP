@@ -372,10 +372,10 @@
 
 
 
-(define (enumerate-interval low high)
-	(if (> low high)
-		nil
-		(cons low (enumerate-interval (+ low 1) high))))
+	(define (enumerate-interval low high)
+		(if (> low high)
+			nil
+			(cons low (enumerate-interval (+ low 1) high))))
 
 
 
@@ -1233,4 +1233,109 @@ Monte carlo methdo
 
 ;try 
  
+(define random-init 90)
+
+(define rand 
+	(let ((x random-init))
+		(lambda() (set! x (rand-update x))
+			x)))
+
+(define random-numbers (cons-stream random-init (stream-map rand-update random-numbers)))
+
+(define (rand-update x)
+	(let ((a 900)
+				(b 555)
+				(m 47))
+		(remainder (+ (* a x) b) m)))	
+
+
+
+(define cesaro-stream (map-successive-pairs (lambda(r1 r2) (= (gcd r1 r2) 1)) 
+																	random-numbers))
+
+(define (map-successive-pairs f s)
+	(cons-stream (f (stream-car s) (stream-car (stream-cdr s)))
+		(map-successive-pairs f (stream-cdr (stream-cdr s)))))
+
+(define (monte-carlo experiment-stream passed failed)
+	(define (next passed failed)
+		(cons-stream (/ passed (+ passed failed))
+			(monte-carlo (stream-cdr experiment-stream) passed failed)))
+			(if (stream-car experiment-stream)
+				(next (+ passed 1) failed)
+				(next passed (+ failed 1))))
+
+(define pi (stream-map (lambda(p) (sqrt (/ 6 p))) 
+	(monte-carlo cesaro-stream 0 0)))
+
+     
+; 1 d table 
+(define (lookup key table)
+	(let ((record (assoc key (cdr table))))
+			(display record)
+		(if record (cdr record)
+								false)))
+
+;for 2d table 
+
+
+(define (lookup key-1 key-2 table)
+	(let ((subtable (assoc key-1 (cdr table))))
+		(if subtable
+					(let ((record (assoc key-2 (cdr subtable))))
+						(if record
+								(cdr record)
+								false)))))
+
+(define (assoc key records)
+	(cond ((null? records) false)
+				((equal? key (caar records)) (car records))
+				(else (assoc key (cdr records)))))
+
+
+
+(define (insert! key value table)
+	(let ((record (assoc key (cdr table))))
+		(if record 
+						(set-cdr! record value)
+						(set-cdr! table (cons (cons key value) (cdr table)))))
+	'ok)
+
+	(define (make-table)
+		(list '*table*))
+
+; changing the assoc table in order to accomodate the modification of the oredered list in the table 
+;that is the key will be given in the form of the list 
+
+
+(define nil '())
+(define prev-ptr nil)
+(define temp-ptr nil)
+(define cur-ptr (cons nil nil))
+
+	(define (assoc key records)
+		(cond ((null? records) false)
+					((< key (caar records)) (set! cur-ptr (car records)) false)
+					((> key (caar records)) (display (car records)) (set! prev-ptr (car records))(assoc key (cdr records)) )
+					; ((< key (caar records)) (set! prev-ptr (car records)) (assoc key (cdr records)))
+					; ((> key (caar records))  false)
+					((nearly-equal? key (caar records)) (car records))
+					(else (assoc key (cdr records)))))
+
+
+(define (insert! key value table)
+	(set! prev-ptr (cdr table))
+	(let ((record (assoc key (cdr table))))
+		(cond  (record (set-cdr! record value) )
+					 ((not (null? prev-ptr)) 
+							(let ((new-node (cons (cons key value) '())))
+											(set-cdr! cur-ptr new-node)
+											(set-cdr! new-node prev-ptr)
+											(set! prev-ptr nil)
+											(set! cur-ptr (cons nil nil))))
+						(else (set-cdr! table (cons (cons key value) (cdr table))))))
+	'ok)
+
+
+
 

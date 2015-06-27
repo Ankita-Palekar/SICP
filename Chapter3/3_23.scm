@@ -46,7 +46,7 @@
 (define (rear-delete-dqueue! queue)
 	(cond ((empty-dqueue? queue)
 					(error "DELETE called with an empty queue" queue))
-					(else   (set-rear-ptr! queue (last-pair (but-last (front-ptr queue))))
+					(else  (set-rear-ptr! queue (last-pair (but-last (front-ptr queue)))) (display (rear-ptr queue))
 						queue)))
 
 
@@ -55,7 +55,7 @@
 (define (print-dqueue queue)
 	(define q (front-ptr queue))
 	(define (print-q q)
-		(cond ((not (null? q)) (display (car q)) (print-q (cdr q)))))
+		(cond ((not (null? q)) (display (car q)) (display "  ") (print-q (cdr q)))))
 		(print-q q))
 
 

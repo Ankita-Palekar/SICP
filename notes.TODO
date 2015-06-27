@@ -42,17 +42,21 @@
 
 Chapter3
  ✔ 3.4 call copse not getting called even after incrementing the wrong password counter  @done (15-06-15 13:00)
- ☐ 3.5 just have a look once again 
- ☐ 3.6 partially evaluated function should give value on call of (rand 'generate) instead it generates the function which then gives the value
- ☐ 3.7
- ☐ 3.10
+ ✔ 3.5 just have a look once again  @done (15-06-26 14:11)
+ ✔ 3.6 partially evaluated function should give value on call of (rand 'generate) instead it generates the function which then gives the value @done (15-06-26 14:11)
+ ✔ 3.7 @done (15-06-26 11:44)
+ ✔ 3.10 @done (15-06-26 11:45)
  ☐ 3.17
- ☐ 3.19 @askRajdeep
+ ✔ 3.19 @askRajdeep  @done (15-06-26 13:13)
  ☐ 3.23 check for the rear-delete-dqueue! not   giving correct answers
- ☐ 3.55
- ☐ 3.58 explaination
+ ✔ 3.55 @done (15-06-26 14:12)
+ ✔ 3.58 explaination @done (15-06-26 15:36)
  ☐ 3.59 generalise for the inverse and check cos sine
  ☐ 3.77
+ ☐ 3.26
+ ☐ 3.32 (tracing the solution for input of the and 1 0 and 0 1)
+
+ 
 
 
  

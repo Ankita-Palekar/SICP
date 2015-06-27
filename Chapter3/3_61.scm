@@ -36,23 +36,21 @@
 
 (define sr (get-Sr-stream integrate-odd-series))
 
-(define invert-unit-series (cons-stream 1 (negate (mul-series Sr invert-unit-series))))
+(define invert-unit-series (cons-stream 1 (scale-stream (mul-series Sr invert-unit-series) -1)))
 
 (define exp-stream (cons-stream 1 (integrate-stream exp-stream)))
 
+ 1 ]=> (display-stream invert-unit-series 10)
 
-
-8 error> (stream-ref invert-unit-series 1)
-;Value: -1
-8 error> (stream-ref invert-unit-series 2)
-;Value: 1
-8 error> (stream-ref invert-unit-series 3)
-;Value: -7/2
-8 error> (stream-ref invert-unit-series 4)
-;Value: 16/3
-8 error> (stream-ref invert-unit-series 5)
-;Value: -149/12
-8 error> (stream-ref invert-unit-series 6)
-;Value: 691/30
-8 error> (stream-ref invert-unit-series 7)
-;Value: -479/10
+1
+-1
+0
+-1/2
+1/3
+1/12
+17/60
+-1/15
+-29/630
+-16/105
+-17/1008
+;Unspecified return value

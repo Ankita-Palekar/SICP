@@ -1,0 +1,1 @@
+Louis reasoners solution never checks if there is no value on the connectors . his program will work only if there is value on the connector otherwise it will never provide with any of the output

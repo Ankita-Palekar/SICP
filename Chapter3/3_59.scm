@@ -66,10 +66,12 @@ B ===>
 1 ]=> (stream-ref exp-stream 1)
 ;Value: 1
  
- (define cosine-stream (cons-stream 1 (stream-negate (integrate-stream sine-stream))))
+ 
+ (define cosine-stream (cons-stream 1 (integrate-stream (scale-stream sine-stream -1))))
  (define sine-stream (cons-stream 0 (integrate-stream cosine-stream)))
 
-
+(define (scale-stream stream factor)
+     	(stream-map (lambda(x) (* x factor)) stream))
 
  ; procedure tried to find the mapping of the negative sign on the alterante integers 
 

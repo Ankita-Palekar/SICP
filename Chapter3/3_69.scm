@@ -24,6 +24,11 @@
 					(else false)))))
 
 
+(define (integers-starting-from-n n)
+	(cons-stream n (integers-starting-from-n (+ n 1))))
+
+(define integers (integers-starting-from-n 1))
+
 (define trips (tripples integers integers integers))
 
 (define tripplet (stream-filter (lambda(trips) (pythagores-tripplets? trips)) trips))
